@@ -1,0 +1,37 @@
+<mat-toolbar color="primary">
+    <span>
+        <a mat-flat-button color="primary" routerLink="/users/simple" routerLinkActive="mat-accent">
+            Users
+        </a>
+    </span>
+    <span>
+        <a mat-flat-button color="primary" routerLink="/users/extended" routerLinkActive="mat-accent">
+            Extended users
+        </a>
+    </span>
+    <span>
+        <a mat-flat-button color="primary" routerLink="/films" routerLinkActive="mat-accent">
+            Films
+        </a>
+    </span>
+    <span class="spacer"></span>
+
+    <span *ngIf="username; else elseBlock">
+        <button type="button" mat-flat-button color="primary" (click)="logout();">
+            <!--routerLink sme pouzili miesto href-->
+            <mat-icon>account_box</mat-icon> <strong>{{ username }}</strong> Logout
+        </button>
+    </span>
+    <!--ng-template sa nezobrazuje v DOM modely, len jeho deti-->
+    <ng-template #elseBlock>
+        <a type="button" mat-flat-button color="primary" routerLink="/login" routerLinkActive="mat-accent">
+            <!--routerLink sme pouzili miesto href-->
+            <mat-icon>account_box</mat-icon> Login
+        </a>
+
+        <a type="button" mat-flat-button color="primary" routerLink="/register" routerLinkActive="mat-accent">
+            <!--routerLink sme pouzili miesto href-->
+            <mat-icon>account_box</mat-icon> Register
+        </a>
+    </ng-template>
+</mat-toolbar>

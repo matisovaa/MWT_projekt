@@ -1,0 +1,108 @@
+<div class="edit-film-wrapper">
+    <form (ngSubmit)="formSubmit()" [formGroup]="filmEditForm">
+
+        <mat-card class="example-card">
+            <mat-card-content>
+                <mat-form-field>
+                    <input matInput placeholder="nazov" formControlName="nazov" required />
+                    <mat-error *ngIf="nazov?.errors?.required">
+                        Nazov musi byt vyplneny
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="rok" formControlName="rok" type="number" required />
+                    <mat-error *ngIf="rok?.errors?.required">
+                        Rok musi byt vyplneny
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Slovenský názov" formControlName="slovenskyNazov" />
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="AFI 1998" formControlName="afi1998" type="number" />
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="AFI 2007" formControlName="afi2007" type="number" />
+                </mat-form-field>
+
+                <p>Režiséri:</p>
+                <div>
+                    <input placeholder="krstne meno" formControlName="reziser_new_krstneMeno" />
+                    <input placeholder="stredne meno" formControlName="reziser_new_stredneMeno" />
+                    <input placeholder="priezvisko *" formControlName="reziser_new_priezvisko" />
+                    <button type='button' matSuffix mat-icon-button color="primary" aria-label="Action"
+                        (click)="pridatRezisera()" [disabled]="reziser_new_priezvisko?.value ==''">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+
+                <br />
+
+                <div formArrayName="reziser">
+                    <div *ngFor="let jedenReziser of reziseri.controls; let i = index">
+                        <div [formGroupName]="i">
+                            <div>
+                                <input placeholder="krstne meno" formControlName="krstneMeno" />
+                                <input placeholder="stredne meno" formControlName="stredneMeno" />
+                                <input placeholder="priezvisko *" formControlName="priezvisko" required />
+                                <button type='button' matSuffix mat-icon-button color="warn" aria-label="Action"
+                                    (click)="deleteReziser(i)">
+                                    <mat-icon>highlight_off</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <p>Postavy:</p>
+
+                <div>
+                    <input placeholder="názov postavy *" formControlName="postava_new_nazovPostavy" />
+                    <select formControlName="dolezitost_new_nazovPostavy">
+                        <option value="hlavna">hlavná postava</option>
+                        <option value="vedlajsia" selected>vedľajšia postava</option>
+                    </select>
+                    <input placeholder="krstne meno" formControlName="postava_new_krstneMeno" />
+                    <input placeholder="stredne meno" formControlName="postava_new_stredneMeno" />
+                    <input placeholder="priezvisko *" formControlName="postava_new_priezvisko" />
+                    <button type='button' matSuffix mat-icon-button color="primary" aria-label="Action"
+                        (click)="pridatPostavu()"
+                        [disabled]="postava_new_nazovPostavy?.value =='' || postava_new_priezvisko?.value ==''">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+
+                <br />
+
+                <div formArrayName="postava">
+                    <div *ngFor="let jednaPostava of postavy.controls; let i = index">
+                        <div [formGroupName]="i">
+                            <div>
+                                <input placeholder="názov postavy *" formControlName="nazovPostavy" required />
+                                <select formControlName="dolezitost">
+                                    <option value="hlavna">hlavná postava</option>
+                                    <option value="vedlajsia" selected>vedľajšia postava</option>
+                                </select>
+                                <input placeholder="krstne meno" formControlName="krstneMeno" />
+                                <input placeholder="stredne meno" formControlName="stredneMeno" />
+                                <input placeholder="priezvisko *" formControlName="priezvisko" required />
+                                <button type='button' matSuffix mat-icon-button color="warn" aria-label="Action"
+                                    (click)="deletePostava(i)">
+                                    <mat-icon>highlight_off</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button type="submit" mat-raised-button color="primary" [disabled]="filmEditForm?.invalid">Save</button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+</div>
